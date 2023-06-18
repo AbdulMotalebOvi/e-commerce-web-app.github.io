@@ -1,0 +1,46 @@
+:root {
+    --tran: all 0.3s linear;
+}
+
+.btn2 {
+    display: inline-block;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: 12px;
+    height: 50px;
+    padding: 0px 42px;
+    font-weight: 600;
+    color: white;
+    border-radius: 42px;
+    background-color: #323232;
+    border: 2px solid #323232;
+    position: relative;
+    z-index: 1;
+    transition: var(--tran);
+    overflow: hidden;
+}
+
+
+
+.btn2::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #bc8246;
+    width: 100%;
+    border: .1rem solid #bc8246;
+    height: 100%;
+    transform: translateY(-100%);
+    transition: var(--tran);
+}
+
+.btn2:hover:before {
+    transform: translateY(0);
+    z-index: -1;
+}
+
+.btn2:hover {
+    color: white;
+    border: .1rem solid #bc8246;
+}

@@ -1,0 +1,9 @@
+.bg_1 {
+    background-image: url('../../assests/bg/base.png');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+
+    height: 679px;
+
+}

@@ -1,0 +1,32 @@
+.myStyle {
+    background-image: url('../../assests/bg/Vector-1.png');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    height: 450px;
+    max-height: 100%;
+    width: 100%;
+    border-radius: 45px;
+}
+
+.myStyle2 {
+    background-image: url('../../assests/bg/Background.png');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    height: 500px;
+    max-height: 100%;
+    width: 100%;
+    border-radius: 45px;
+}
+
+.myStyle3 {
+    background-image: url('../../assests/bg/Mask Group.png');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    height: 500px;
+    max-height: 100%;
+    width: 100%;
+    border-radius: 45px;
+}
