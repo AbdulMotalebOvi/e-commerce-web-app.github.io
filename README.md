@@ -51,6 +51,19 @@ The DELETE API allows users or administrators to remove resources from the serve
 - Database: (https://dummyjson.com/)
 - Frontend: [React](https://reactjs.org/), [Next.js](https://nextjs.org/)
 
+
+## Libraries and Tools Used
+
+The project also utilizes the following libraries and tools:
+
+- [Slick Slider](https://kenwheeler.github.io/slick/): Enables a responsive and customizable image slider for product carousels and galleries.
+- [React Hot Toast](https://react-hot-toast.com/): Provides toast notifications to display success messages, errors, and other notifications.
+- [Tailwind css](https://tailwindcss.com/): A collection of accessible UI components for React applications.
+- [React Hook Form](https://react-hook-form.com/): Simplifies form validation and data handling in React.
+- [React Responsive Modal](https://github.com/pradel/react-responsive-modal): Offers a responsive and customizable modal component for displaying additional information or actions.
+- [HeroIcons](https://heroicons.com/): Provides a set of beautiful and customizable icons for your UI.
+
+
 ## Getting Started
 
 1: Clone the repository:
