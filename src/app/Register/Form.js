@@ -1,6 +1,6 @@
 'use client'
 import { useForm } from "react-hook-form";
-import Button from "../Button/Button";
+
 import Link from "next/link";
 import ButtonBlack from "../ButtonBlack/ButtonBlack";
 import { toast } from "react-hot-toast";
@@ -12,11 +12,14 @@ import Loader from "../Loader/Loader";
 
 export default function Form() {
     const imgbb = 'f8dd55d27cbe2841ea00d77e428e6944';
-    const [loading, setLoading] = useState(true)
+
+    const [loading, setLoading] = useState(false); // Set initial loading state to false
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
-    const router = useRouter()
+    const router = useRouter();
 
     const submit = (data) => {
+        setLoading(true); // Set loading state to true when form is submitted
+
         const image = data.image[0]
         const formData = new FormData();
         formData.append('image', image);
@@ -27,7 +30,6 @@ export default function Form() {
         })
             .then(response => response.json())
             .then(result => {
-                setLoading(false)
                 const user = {
                     UserName: data.userName,
                     FirstName: data.firstName,
@@ -37,25 +39,35 @@ export default function Form() {
                     password: data.password,
                     image: result.data.url,
                 }
+
                 fetch('https://dummyjson.com/users/add', {
                     method: 'POST',
-                    headers:
-                    {
+                    headers: {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify(user)
                 })
                     .then(res => res.json())
                     .then(data => {
-                        toast.success('User Created Successfully')
-                        reset()
-                        setLoading(false)
+                        toast.success('User Created Successfully');
+                        reset();
+                        setLoading(false); // Set loading state to false when API call is complete
                         router.push('/');
+                        console.log(data);
                     })
+                    .catch(error => {
+                        toast.error('Failed to create user');
+                        setLoading(false); // Set loading state to false in case of error
+                    });
             })
-    }
+            .catch(error => {
+                toast.error('Failed to upload image');
+                setLoading(false); // Set loading state to false in case of error
+            });
+    };
+
     if (loading) {
-        return <Loader />
+        return <Loader />;
     }
     return (
         <div className=" border-2 border-[#eaedff] max-w-screen-md mx-auto">
@@ -165,7 +177,7 @@ export default function Form() {
                         </div>
                     </div>
                     <div className="space-y-5 my-10 m-auto">
-                        <Button type='submit' title='Register Account' />
+                        <ButtonBlack type='submit' title='Register Account' />
                         <p className="my-2 text-black text-center">Or</p>
 
                         <Link className="mt-5 ml-3" href='/SecurityLogin'>
