@@ -1,12 +1,11 @@
 'use client'
 import { useQuery } from '@tanstack/react-query';
-import { useState } from 'react';
 import toast from 'react-hot-toast';
 import Loader from '@/app/Loader/Loader';
 
 
 const ManageProducts = () => {
-    const [open, setOpen] = useState(false);
+
     const { data: products = [], isLoading, refetch } = useQuery({
         queryKey: ['products'],
         queryFn: async () => {

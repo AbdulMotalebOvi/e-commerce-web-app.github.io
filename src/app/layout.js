@@ -4,7 +4,7 @@ import { CartProvider } from './IDContext/CartProvider'
 import Navbar from './Navbar/Navbar'
 import { Toaster } from 'react-hot-toast';
 import './globals.css'
-import { UserProvider } from './IDContext/UserProvider';
+import LocalStorageProvider from './IDContext/LocalStorageProvider';
 import QueryProvider from './QueryProvider';
 
 
@@ -21,12 +21,12 @@ export default function RootLayout({ children }) {
       <body>
         <QueryProvider>
           <CartProvider>
-            <UserProvider>
+            <LocalStorageProvider>
               <Navbar />
               {children}
               <Toaster />
               <FooterThreeCols />
-            </UserProvider>
+            </LocalStorageProvider>
           </CartProvider>
         </QueryProvider>
       </body>

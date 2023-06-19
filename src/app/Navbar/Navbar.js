@@ -1,16 +1,41 @@
 'use client'
 import React, { useState } from 'react'
-import { NavLinks } from './NavLinks';
+import logo from '../assests/logo/Logo.png'
 import Link from 'next/link';
 import DropdownMenu from './DropdownMenu';
 import Cart from './Cart/Cart';
-import WishList from './WishList/WishList';
+import { MagnifyingGlassIcon, UserCircleIcon } from '@heroicons/react/24/solid'
+import useGetData from '../Hooks/useGetData';
+import Loader from '../Loader/Loader';
+import { useRouter } from 'next/navigation';
+import Image from 'next/image';
+import Profile from '../Profile/page';
+
 
 export default function Navbar() {
+    const [searchValue, setSearchValue] = useState()
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const router = useRouter()
+    const { data, isLoading } = useGetData(`https://dummyjson.com/products/search?q=${searchValue}`);
+    if (isLoading) {
+        return <Loader />
+    }
+    const handlerToSearch = (e) => {
+        e.preventDefault();
+        router.push(
+            { pathname: "/SearchData", query: searchValue },
+            "/SearchData"
+        );
+
+    };
+
+    if (isLoading) {
+        return <Loader />;
+    }
+
 
     return (
-        <div className='bg-[#f5f5f5]'>
+        <div className='bg-[#1E66FF]'>
             <div className=' px-4 py-5 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8'>
                 <div className="relative flex  grid items-center grid-cols-2 lg:grid-cols-3 z-[1000]">
                     <Link
@@ -19,19 +44,44 @@ export default function Navbar() {
                         title="OutStock"
                         className="items-center inline-flex"
                     >
-                        <span className="ml-2 text-xl font-bold tracking-wide text-gray-800 uppercase">
-                            OutStock
-                        </span>
+                        <Image src={logo} alt="" />
                     </Link>
                     <ul className="flex items-center hidden space-x-8 lg:flex">
-                        {/* {NavLinks} */}
+                        <div className="relative w-full ">
+                            <form onSubmit={handlerToSearch}>
+                                <label htmlFor="search" className="sr-only">
+                                    Search
+                                </label>
+                                <input
+                                    type="search"
+                                    id="search"
+                                    placeholder="Search product"
+                                    className="w-full rounded-full border-black border-none pl-3 py-2 pe-10 shadow-sm sm:text-sm"
+                                    value={searchValue}
+                                    onChange={(e) => setSearchValue(e.target.value)}
+                                />
+                                <span className="absolute inset-y-0 end-0 grid w-10 place-content-center">
+                                    <button
+                                        type="submit"
+                                        className="rounded-full bg-[#4DC3F7]  px-6 py-[6px] mr-6"
+                                    >
+                                        <MagnifyingGlassIcon className="h-6 w-6 text-white" />
+                                    </button>
+                                </span>
+                            </form>
+                        </div>
 
                     </ul>
 
-                    <ul className="flex items-center hidden ml-auto space-x-8 lg:flex">
-                        <>
-                            <WishList />
-                        </>
+                    <ul className="flex items-center hidden ml-auto space-x-8  lg:flex">
+                        <li className="flex items-center space-x-1 justify-center focus:outline-none">
+
+                            <Link className='flex items-center space-x-2' href='/Profile'>
+                                <UserCircleIcon className="w-6 h-6 text-white" />
+                                <span className='text-white'>Account</span>
+                            </Link>
+
+                        </li>
                         <>
                             <Cart />
                         </>
@@ -63,19 +113,16 @@ export default function Navbar() {
                         </button>
                         {isMenuOpen && (
                             <div className="absolute top-0 left-0 w-full">
-                                <div className="p-5 bg-white border rounded shadow-sm">
+                                <div className="p-5 bg-[#1E66FF] border rounded shadow-sm">
                                     <div className="flex items-center justify-between mb-4">
                                         <div>
                                             <Link
                                                 href="/"
                                                 aria-label="OutStock"
                                                 title="OutStock"
-                                                className="inline-flex items-center"
+                                                className="items-center inline-flex"
                                             >
-
-                                                <span className="ml-2 text-xl font-bold tracking-wide text-gray-800 uppercase">
-                                                    OutStock
-                                                </span>
+                                                <Image src={logo} alt="" />
                                             </Link>
                                         </div>
                                         <div>
@@ -96,7 +143,29 @@ export default function Navbar() {
                                     </div>
                                     <nav>
                                         <ul className="space-y-4">
-                                            {NavLinks}
+                                            <div className="relative w-full ">
+                                                <form onSubmit={handlerToSearch}>
+                                                    <label htmlFor="search" className="sr-only">
+                                                        Search
+                                                    </label>
+                                                    <input
+                                                        type="search"
+                                                        id="search"
+                                                        placeholder="Search product"
+                                                        className="w-full rounded-full border-black border-none pl-3 py-2 pe-10 shadow-sm sm:text-sm"
+                                                        value={searchValue}
+                                                        onChange={(e) => setSearchValue(e.target.value)}
+                                                    />
+                                                    <span className="absolute inset-y-0 end-0 grid w-10 place-content-center">
+                                                        <button
+                                                            type="submit"
+                                                            className="rounded-full bg-[#4DC3F7]  px-6 py-[6px] mr-6"
+                                                        >
+                                                            <MagnifyingGlassIcon className="h-6 w-6 text-white" />
+                                                        </button>
+                                                    </span>
+                                                </form>
+                                            </div>
                                         </ul>
                                     </nav>
                                 </div>

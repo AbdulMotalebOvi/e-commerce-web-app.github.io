@@ -12,17 +12,17 @@ export default function Cart() {
     const deleItem = (id) => {
         removeFromCart(id)
     }
-    // console.log(cartItems);
-    // Retrieve cartData from local storage
+
 
     return (
         <>
+
             {
                 cartItems &&
                 <li className="relative group">
                     <button className="flex items-center space-x-1 justify-center focus:outline-none">
-                        <ShoppingBagIcon className="w-6 h-6 text-[#323232]" />
-                        <span>2</span>
+                        <ShoppingBagIcon className="w-6 h-6 text-white" />
+                        <span className='text-white'>Cart</span>
                     </button>
 
                     {
@@ -38,7 +38,8 @@ export default function Cart() {
                                                     className="relative inline-flex h-[80px] w-[80px] items-center justify-center text-white"
                                                 >
                                                     <img
-                                                        src={pd.image}
+                                                        src={pd.thumbnail
+                                                        }
 
 
                                                         className="max-w-full"
@@ -46,25 +47,28 @@ export default function Cart() {
                                                 </div>
                                                 <div className='space-y-2'>
                                                     <p className="text-[13px] font-medium text-slate-700">
-                                                        {pd.productName}
+                                                        {pd.title}
                                                     </p>
-                                                    <p className="text-sm text-slate-400"> {`${pd.quantity} x $${pd.previousPrice}`}</p>
+                                                    <p className="text-sm text-slate-400"> {`${pd.quantity} x $${pd.price}`}</p>
                                                 </div>
                                             </header>
                                             <div>
-                                                <XMarkIcon onClick={() => deleItem(pd._id)} className="w-6 h-6 text-[#323232] cursor-pointer" />
+                                                <XMarkIcon onClick={() => deleItem(pd.id)} className="w-6 h-6 text-[#323232] cursor-pointer" />
                                             </div>
 
                                         </div>
                                         <div className='flex justify-between items-center p-5 font-medium '>
                                             <p>Subtotal: </p>
                                             {
-                                                !pd.amount ? <p>${pd.previousPrice} </p> : <p>${pd.amount} </p>
+                                                !pd.amount ? <p>${pd.price} </p> : <p>${pd.amount} </p>
                                             }
                                         </div>
                                         <div className='p-5 flex flex-col space-y-4'>
+                                            <Link href='/YourCart'>
+                                                <Button title='View Cart'  ></Button>
+                                            </Link>
 
-                                            <Button title='View Cart' link='YourCart' ></Button>
+
                                             <Link href='/CheckOut'>
 
                                                 <ButtonBlack title='Checkout'>Check Out</ButtonBlack>

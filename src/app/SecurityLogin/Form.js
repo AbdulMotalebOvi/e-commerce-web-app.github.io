@@ -3,9 +3,12 @@ import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { LocalStorageContext } from "../IDContext/LocalStorageProvider";
+
 
 export default function Form() {
     const [error, setError] = useState()
+    const { setData } = useContext(LocalStorageContext)
     const router = useRouter()
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
     const submit = (data) => {
@@ -21,11 +24,14 @@ export default function Form() {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
+                const info = {
+                    user,
+                    userId: data.id
+                }
+                setData(info)
                 toast.success('log in  Successfully')
                 reset()
                 router.push('/');
-
 
             }).catch(error => {
                 setError(error)
@@ -33,7 +39,8 @@ export default function Form() {
                 setLoading(false); // Set loading state to false in case of error
             });
     }
-        ;
+
+
     return (
         <div className=" border-2 border-[#eaedff] max-w-screen-md mx-auto">
             <div className="p-[10%]">

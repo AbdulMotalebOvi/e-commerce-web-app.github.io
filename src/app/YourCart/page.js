@@ -1,9 +1,59 @@
-import ButtonBlack from "../ButtonBlack/ButtonBlack";
+'use client'
+import { useQuery } from "@tanstack/react-query";
+import Loader from "../Loader/Loader";
 import { CommonSection } from "../sectionHook/CommonSection";
-import CartTotal from "./CartTotal";
 import Table from "./Table";
+import { useLocalStorage } from "../IDContext/LocalStorageProvider";
+import { toast } from "react-hot-toast";
+import useGetData from "../Hooks/useGetData";
+import Button from "../Button/Button";
+import Link from "next/link";
 
 export default function YourCart() {
+    const { data: useata } = useLocalStorage()
+    const id = useata.userId
+
+    const { data: products = [], isLoading, refetch } = useQuery({
+        queryKey: ['products'],
+        queryFn: async () => {
+            try {
+                const res = await fetch(`https://dummyjson.com/carts/user/${id}`, {
+
+                })
+                const data = res.json()
+                return data
+            }
+
+            catch (error) {
+                console.log(error);
+            }
+        }
+    })
+
+    const handlerToDeleteUser = id => {
+        const proceed = window.confirm('Do you want to delete this user?')
+        if (proceed) {
+            fetch(`https://dummyjson.com/carts/${id}`, {
+                method: 'DELETE',
+
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data?.deletedOn) {
+                        toast.success('Item deleted Successfully')
+                        refetch()
+                    }
+                })
+        }
+    }
+
+    if (isLoading) {
+        return <Loader />
+    }
+    const myFetchData = products.carts[0].products
+    console.log(myFetchData);
+
+    // section title
     const header = 'Your Cart';
     const title = 'Cart';
     const linkUp = 'Cart'
@@ -12,24 +62,14 @@ export default function YourCart() {
         <section>
             {sectionMarkup}
             <div className="my-20 max-w-screen-xl mx-auto">
-                <Table />
-                <div className="flex items-center justify-between my-10">
-                    <div className="flex items-center justify-center space-x-3">
-                        <div className="relative">
-                            <input
-                                type="email"
-                                id="UserEmail"
-                                placeholder="Coupon Code"
-                                className="px-4 py-3 text-[323232]  border-2 rounded-md border-gray-400 pe-10 shadow-sm sm:text-sm"
-                            />
+                <Table handlerToDeleteUser={handlerToDeleteUser} myFetchData={myFetchData} />
 
-                        </div>
-                        <ButtonBlack title='apply coupon' />
-                    </div>
-                    <ButtonBlack title='Clear Cart' />
-                </div>
                 <div className="my-10">
-                    <CartTotal />
+
+                    <Link href='/CheckOut'>
+                        <Button title='proceed to checkout' />
+                    </Link>
+
                 </div>
             </div>
         </section>

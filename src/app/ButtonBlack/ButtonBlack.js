@@ -1,7 +1,7 @@
 import './button.css'
 
-export default function ButtonBlack({ title }) {
+export default function ButtonBlack({ title, type }) {
     return (
-        <button className='btn2'>{title}</button>
+        <button type={type} className='btn2'>{title}</button>
     )
 }

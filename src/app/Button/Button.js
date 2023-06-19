@@ -1,10 +1,10 @@
 'use client'
-import { useRouter } from "next/navigation"
+
 import './button.css'
 
-export default function Button({ title, link }) {
-    const router = useRouter()
+export default function Button({ title }) {
+
     return (
-        <button onClick={() => router.push(`/${link}`)} className='btn'>{title}</button>
+        <button className='btn'>{title}</button>
     )
 }

@@ -1,7 +1,22 @@
+'use client'
+import useGetData from "../Hooks/useGetData";
+import { useLocalStorage } from "../IDContext/LocalStorageProvider";
+import Loader from "../Loader/Loader";
 import { CommonSection } from "../sectionHook/CommonSection";
 import CheckoutForm from "./CheckoutForm";
 
 export default function Checkout() {
+    const { data: useata } = useLocalStorage()
+    const id = useata.userId
+    const url = `https://dummyjson.com/carts/user/${id}`
+    const { data, isLoading } = useGetData(url)
+
+    if (isLoading) {
+        return <Loader />
+    }
+    const myFetchData = data.carts[0].products
+    console.log(myFetchData);
+
     const header = 'Checkout';
     const title = 'Checkout';
     const linkUp = 'Checkout'

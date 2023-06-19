@@ -21,7 +21,7 @@ const PortfolioGallery = () => {
         setLoading(false);
         fetchProjects();
     }, []);
-    console.log(projects);
+
     const myData = projects.products;
 
 
@@ -62,9 +62,7 @@ const PortfolioGallery = () => {
     if (loading || isLoading) {
         return <Loader />;
     }
-    // if (error) {
-    //     window.alert('Failed to fetch')
-    // }
+
 
     return (
         <section className='max-w-screen-xl mx-auto my-20'>

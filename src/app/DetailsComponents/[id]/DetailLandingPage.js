@@ -5,16 +5,21 @@ import { PlusIcon } from '@heroicons/react/24/solid'
 import { MinusIcon } from '@heroicons/react/24/solid'
 import { useContext, useState } from "react";
 import YourReview from "./YourReview";
+
 import { CartContext } from "@/app/IDContext/CartProvider";
-import ButtonBlack from "@/app/ButtonBlack/ButtonBlack";
-import UserContext from "@/app/IDContext/UserProvider";
+import { toast } from "react-hot-toast";
+import { useLocalStorage } from "@/app/IDContext/LocalStorageProvider";
+import { useRouter } from "next/navigation";
+
 
 
 
 export default function DetailLandingPage({ data, loading }) {
-    const { addToCart } = useContext(CartContext);
-    const { userId } = useContext(UserContext)
-    console.log(userId);
+    const { data: useata } = useLocalStorage()
+    const myUser = useata.userId
+    const router = useRouter()
+    const [product, setProduct] = useState([]);
+    const { addToCart } = useContext(CartContext)
     const [quantity, setQuantity] = useState(1);
     const [amount, setAmount] = useState();
     const [open, setOpen] = useState(false);
@@ -23,8 +28,6 @@ export default function DetailLandingPage({ data, loading }) {
     if (loading) {
         return <Loader />;
     }
-
-
     const handleDecreaseQuantity = () => {
         if (quantity > 1) {
             const total = quantity - 1
@@ -46,23 +49,45 @@ export default function DetailLandingPage({ data, loading }) {
 
     const handleAddToCart = (e) => {
         e.preventDefault();
-        const cartData = {
-            image: thumbnail,
-            productName: title,
+
+        const cart = {
+            thumbnail, title, price, quantity, id, amount
+        }
+
+        const newCartItem = {
+            id: id,
             quantity: quantity,
-            previousPrice: price,
-            amount: amount,
-            userId,
-            id
+            price,
+            thumbnail,
+            amount
+            // Add other relevant properties from your product data
         };
-        // addToCart(cartData)
+        setProduct((prevProducts) => [...prevProducts, newCartItem]);
+        const cartData = {
+            userId: myUser,
+            products: product,
+        };
+
         fetch('https://dummyjson.com/carts/add', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(cartData)
+            body: JSON.stringify(cartData),
         })
-            .then(res => res.json())
-            .then(data => console.log(data))
+            .then((res) => res.json())
+            .then(data => {
+                console.log(data);
+                if (data.discountedTotal) {
+                    addToCart(cart)
+                    toast.success('Product Added Successfully');
+                    router.push('/YourCart')
+                }
+
+            })
+            .catch((error) => {
+                console.error(error);
+                toast.error('Failed to add product');
+            });
+
     };
     return (
         <section className="relative mx-auto max-w-screen-xl px-4 py-10">
@@ -151,12 +176,12 @@ export default function DetailLandingPage({ data, loading }) {
                                 </button>
                             </div>
 
-                            <ButtonBlack
+                            <button
                                 type="submit"
                                 className="block rounded bg-green-600 px-5 py-3 text-xs font-medium text-white hover:bg-green-500"
                                 title='Add To Cart'
 
-                            />
+                            >Add to Cart</button>
                         </div>
                     </form>
                 </div>

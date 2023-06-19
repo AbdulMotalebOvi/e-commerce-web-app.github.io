@@ -8,10 +8,10 @@ export default function Hero() {
     return (
         <section className='bg_1'>
             <div className='pl-[180px] pr-[160px] flex flex-col justify-center m-auto '>
-                <div className='navbar my-3'>
+                <div className='my-3'>
                     <MenuItems />
                 </div>
-                <div className='flex justify-between items-center hero-section'>
+                <div className='flex justify-between items-center hero-section mt-[40px]'>
                     {/* First part */}
                     <div className='w-[500px] relative'>
                         <div className='space-y-4'>
