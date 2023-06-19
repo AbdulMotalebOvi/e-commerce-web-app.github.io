@@ -9,28 +9,31 @@ export default function Form() {
     const router = useRouter()
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
     const submit = (data) => {
-        const name = data.name
-
-        logInWithDb(name, data.password)
-        toast.success('log in  Successfully')
-        reset()
-        router.push('/');
-    }
-    const logInWithDb = async (name, password) => {
-        const user = { name, password };
-        try {
-            const response = await fetch('https://dummyjson.com/auth/login', {
-                method: 'POST',
-                headers:
-                    { 'Content-Type': 'application/json' },
-                body: JSON.stringify(user)
-            });
-            const data = await response.json();
-            console.log(data);
-        } catch (error) {
-            console.error('Error:', error);
+        const user = {
+            username: data.name,
+            password: data.password
         }
-    };
+        fetch('https://dummyjson.com/auth/login', {
+            method: 'POST',
+            headers:
+                { 'Content-Type': 'application/json' },
+            body: JSON.stringify(user)
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                toast.success('log in  Successfully')
+                reset()
+                router.push('/');
+
+
+            }).catch(error => {
+                setError(error)
+                toast.error('Failed to Login');
+                setLoading(false); // Set loading state to false in case of error
+            });
+    }
+        ;
     return (
         <div className=" border-2 border-[#eaedff] max-w-screen-md mx-auto">
             <div className="p-[10%]">
@@ -45,9 +48,9 @@ export default function Form() {
                             <label className="relative block overflow-hidden border-b border-gray-200 bg-transparent pt-3 focus-within:border-blue-600">
                                 <input className="peer h-8 w-full border-none bg-transparent p-0 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm " {...register("name", { required: true })} />
                                 <span className="absolute start-0 top-2 -translate-y-1/2 text-[13px] text-black transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-[17px]">
-                                    Name
+                                    Username
                                 </span>
-                                {errors.name?.type === 'required' && <p className="text-red-600 font-semibold">Name is required</p>}
+                                {errors.className?.type === 'required' && <p className="text-red-600 font-semibold">Name is required</p>}
                             </label>
                         </div>
                         {/* password */}

@@ -18,16 +18,18 @@ export default function DropdownMenu() {
                         <Link href="/">My Account</Link>
                     </li>
                     <li className="px-3 py-2 hover:bg-gray-100">
-                        <button onClick={() => router.push('/YourCart')}>Your Cart</button>
+                        <Link href='/YourCart'>Your Cart</Link>
+
                     </li>
                     <li className="px-3 py-2 hover:bg-gray-100">
-                        <button onClick={() => router.push('/CheckOut')}  >Checkout</button>
+                        <Link href='/CheckOut'>Checkout</Link>
                     </li>
                     <li className="px-3 py-2 hover:bg-gray-100">
                         <Link href='/Register' >Create Account</Link>
                     </li>
                     <li className="px-3 py-2 hover:bg-gray-100">
-                        <button onClick={() => router.push('/SecurityLogin')}>Sign In</button>
+                        <Link href='/SecurityLogin'>Sign In</Link>
+
                     </li>
                 </ul>
             </div>
