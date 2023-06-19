@@ -12,7 +12,6 @@ const DashBoard = () => {
         <div className=''>
             {sectionMarkup}
             <AdminHomePage />
-
         </div>
     );
 };

@@ -12,7 +12,7 @@ const SideNav = () => {
     };
     return (
         <div className="my-10">
-            <div className="flex  justify-center items-center space-x-6  py-4 rounded-lg">
+            <div className="flex flex-wrap justify-center items-center space-x-6 space-y-4 md:space-y-0 py-4 rounded-lg">
                 <button
                     className={`py-2 px-4 rounded ${activeCategory === 'AddProducts' ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-700'
                         }`}
@@ -41,6 +41,7 @@ const SideNav = () => {
                 {activeCategory === 'AllUsers' && <AllUsers />}
             </div>
         </div>
+
 
     );
 };

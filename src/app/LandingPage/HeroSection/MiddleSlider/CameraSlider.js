@@ -7,9 +7,12 @@ import Image from 'next/image';
 const CameraSlider = () => {
     return (
 
-        <div style={{ width: '410px', height: '410px', borderRadius: '50%', border: '10px solid rgba(32, 98, 255, 0.4)' }}>
-            <Image style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%' }} src={img1} alt='Image 1' />
-
+        <div className='w-[410px] h-[410px] md:w-[510px] md:h-[510px] rounded-full border-10 border-[rgba(32, 98, 255, 0.4)]'>
+            <Image
+                className='w-full h-full object-cover rounded-full'
+                src={img1}
+                alt='Image 1'
+            />
         </div>
     );
 };

@@ -19,8 +19,6 @@ const Additional = () => {
                     {/* Add more items here */}
                 </tbody>
             </table>
-
-
         </div>
     );
 };

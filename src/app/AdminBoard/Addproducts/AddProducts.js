@@ -63,8 +63,8 @@ const AddProducts = () => {
     }
     return (
         <div className='my-5'>
-            <h1 className='text-2xl text-center '>Add a new Product</h1>
-            <div className="max-w-screen-xl  mx-auto flex justify-center items-center">
+            <h1 className='text-2xl text-center mb-5'>Add a new Product</h1>
+            <div className="max-w-screen-xl mx-auto flex justify-center items-center">
                 <form onSubmit={handleSubmit(addproducts)} className="w-full max-w-md">
                     <div className="form-control w-full mb-4">
                         <label className="label">
@@ -151,8 +151,8 @@ const AddProducts = () => {
                     <input type="submit" className="btn mt-8 w-full" value="Add" />
                 </form>
             </div>
-
         </div>
+
     );
 };
 

@@ -98,59 +98,49 @@ export default function DetailLandingPage({ data, loading }) {
                         src={thumbnail}
                         className="aspect-square w-full rounded-xl object-cover"
                         onError={(e) => {
-                            e.currentTarget.src = "https://media.istockphoto.com/id/155384933/photo/computer-showing-an-error-message.jpg?b=1&s=612x612&w=0&k=20&c=g6FZqU_w16SQBzI4ACgj5nwitfDleNS-xCorvBsxjXA="
+                            e.currentTarget.src =
+                                "https://media.istockphoto.com/id/155384933/photo/computer-showing-an-error-message.jpg?b=1&s=612x612&w=0&k=20&c=g6FZqU_w16SQBzI4ACgj5nwitfDleNS-xCorvBsxjXA="
                         }}
                     />
-
                 </div>
 
-                <div className="sticky top-0 ">
-                    <strong
-                        className="rounded-full border border-blue-600 bg-gray-100 px-3 py-0.5 text-[18px] tracking-wide text-blue-600"
-                    >
+                <div className="sticky top-0">
+                    <strong className="rounded-full border border-blue-600 bg-gray-100 px-3 py-0.5 text-[18px] tracking-wide text-blue-600">
                         Stock: {stock}
                     </strong>
 
-                    <div className="mt-8 flex justify-between">
-                        <div className=" space-y-2">
-                            <h1 className="text-xl font-bold sm:text-2xl">
-                                {title}
-                            </h1>
+                    <div className="mt-8 flex flex-col md:flex-row md:items-center md:justify-between">
+                        <div className="space-y-2">
+                            <h1 className="text-xl font-bold sm:text-2xl">{title}</h1>
 
-                            <ul className="flex items-center ">
-                                <li className="text-[16px]" style={{ borderRight: '1px solid #dcdcdc', paddingRight: '30px' }}>{brand}</li>
-                                <li style={{ paddingLeft: '30px', borderRight: '1px solid #dcdcdc', paddingRight: '30px' }}><Review number={rating} />
+                            <ul className="flex items-center space-x-4">
+                                <li className="text-[16px]">{brand}</li>
+                                <li>
+                                    <Review number={rating} />
                                 </li>
-                                <li style={{ paddingLeft: '30px', }}><button className="button" onClick={() => setOpen(true)}>
-                                    Add Review
-                                </button></li>
+                                <li>
+                                    <button className="button" onClick={() => setOpen(true)}>
+                                        Add Review
+                                    </button>
+                                </li>
                             </ul>
-
                         </div>
                         <>
                             <YourReview data={data} open={open} setOpen={setOpen} />
                         </>
 
-                        <p className="text-lg font-bold">${
-                            amount ? amount : price
-                        }
-
+                        <p className="text-lg font-bold">
+                            ${amount ? amount : price}
                         </p>
                     </div>
                     <div className="mt-4">
                         <div className="prose max-w-none">
-                            <p>
-                                {description}
-                            </p>
+                            <p>{description}</p>
                         </div>
-
                     </div>
 
                     <form onSubmit={handleAddToCart} className="mt-8">
-
-
-                        <div className="mt-8 flex gap-4">
-
+                        <div className="mt-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                             <div className="flex rounded border-gray-200">
                                 <button
                                     type="button"
@@ -179,14 +169,16 @@ export default function DetailLandingPage({ data, loading }) {
                             <button
                                 type="submit"
                                 className="block rounded bg-green-600 px-5 py-3 text-xs font-medium text-white hover:bg-green-500"
-                                title='Add To Cart'
-
-                            >Add to Cart</button>
+                                title="Add To Cart"
+                            >
+                                Add to Cart
+                            </button>
                         </div>
                     </form>
                 </div>
             </div>
         </section>
+
 
     )
 }
