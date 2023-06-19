@@ -4,6 +4,9 @@ import { CartProvider } from './IDContext/CartProvider'
 import Navbar from './Navbar/Navbar'
 import { Toaster } from 'react-hot-toast';
 import './globals.css'
+import { UserProvider } from './IDContext/UserProvider';
+import QueryProvider from './QueryProvider';
+
 
 
 export const metadata = {
@@ -12,15 +15,20 @@ export const metadata = {
 }
 
 export default function RootLayout({ children }) {
+
   return (
     <html lang="en">
       <body>
-        <CartProvider>
-          <Navbar />
-          {children}
-          <Toaster />
-          <FooterThreeCols />
-        </CartProvider>
+        <QueryProvider>
+          <CartProvider>
+            <UserProvider>
+              <Navbar />
+              {children}
+              <Toaster />
+              <FooterThreeCols />
+            </UserProvider>
+          </CartProvider>
+        </QueryProvider>
       </body>
     </html>
   )

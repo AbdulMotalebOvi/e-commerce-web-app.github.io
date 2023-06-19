@@ -7,16 +7,18 @@ import { useContext, useState } from "react";
 import YourReview from "./YourReview";
 import { CartContext } from "@/app/IDContext/CartProvider";
 import ButtonBlack from "@/app/ButtonBlack/ButtonBlack";
+import UserContext from "@/app/IDContext/UserProvider";
 
 
 
 export default function DetailLandingPage({ data, loading }) {
     const { addToCart } = useContext(CartContext);
-
+    const { userId } = useContext(UserContext)
+    console.log(userId);
     const [quantity, setQuantity] = useState(1);
     const [amount, setAmount] = useState();
     const [open, setOpen] = useState(false);
-    const { thumbnail, title, price, stock, rating, brand, description } = data;
+    const { id, thumbnail, title, price, stock, rating, brand, description } = data;
 
     if (loading) {
         return <Loader />;
@@ -50,8 +52,17 @@ export default function DetailLandingPage({ data, loading }) {
             quantity: quantity,
             previousPrice: price,
             amount: amount,
+            userId,
+            id
         };
-        addToCart(cartData)
+        // addToCart(cartData)
+        fetch('https://dummyjson.com/carts/add', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(cartData)
+        })
+            .then(res => res.json())
+            .then(data => console.log(data))
     };
     return (
         <section className="relative mx-auto max-w-screen-xl px-4 py-10">

@@ -5,14 +5,15 @@ import Link from "next/link";
 import ButtonBlack from "../ButtonBlack/ButtonBlack";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Loader from "../Loader/Loader";
+import UserContext from "../IDContext/UserProvider";
 
 
 
 export default function Form() {
     const imgbb = 'f8dd55d27cbe2841ea00d77e428e6944';
-
+    const { updateUserId } = useContext(UserContext);
     const [loading, setLoading] = useState(false); // Set initial loading state to false
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
     const router = useRouter();
@@ -53,7 +54,8 @@ export default function Form() {
                         reset();
                         setLoading(false); // Set loading state to false when API call is complete
                         router.push('/');
-                        console.log(data);
+                        updateUserId(data.id)
+                        console.log(data.id);
                     })
                     .catch(error => {
                         toast.error('Failed to create user');
