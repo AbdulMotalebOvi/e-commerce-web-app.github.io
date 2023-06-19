@@ -10,8 +10,11 @@ export const useLocalStorage = () => useContext(LocalStorageContext);
 // Create a localStorage provider component
 export const LocalStorageProvider = ({ children }) => {
     const [storedData, setStoredData] = useState(() => {
-        const storedData = localStorage.getItem('data');
-        return storedData ? JSON.parse(storedData) : null;
+        if (typeof localStorage !== 'undefined') {
+            const storedData = localStorage.getItem('data');
+            return storedData && storedData !== 'undefined' ? JSON.parse(storedData) : null;
+        }
+        return null;
     });
 
     const setData = (data) => {
@@ -19,15 +22,6 @@ export const LocalStorageProvider = ({ children }) => {
         setStoredData(data);
     };
 
-    // const getUserIdByUsername = (username) => {
-    //     if (storedData && Array.isArray(storedData.users)) {
-    //       const user = storedData.users.find((user) => user.username === username);
-    //       if (user) {
-    //         return user.userId;
-    //       }
-    //     }
-    //     return null;
-    //   };
 
     const clearData = () => {
         localStorage.removeItem('data');
@@ -37,7 +31,7 @@ export const LocalStorageProvider = ({ children }) => {
     const value = {
         data: storedData,
         setData,
-        // getUserIdByUsername,
+
         clearData,
     };
 
