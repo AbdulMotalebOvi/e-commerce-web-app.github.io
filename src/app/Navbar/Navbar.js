@@ -74,6 +74,9 @@ export default function Navbar() {
                     </ul>
 
                     <ul className="flex items-center hidden ml-auto space-x-8  lg:flex">
+                        <li className="flex items-center space-x-1 justify-center focus:outline-none text-white">
+                            <Link href='/AdminBoard'> Admin Actions</Link>
+                        </li>
                         <li className="flex items-center space-x-1 justify-center focus:outline-none">
 
                             <Link className='flex items-center space-x-2' href='/Profile'>
