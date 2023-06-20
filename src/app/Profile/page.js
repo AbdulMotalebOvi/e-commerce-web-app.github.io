@@ -6,13 +6,13 @@ import Loader from '../Loader/Loader';
 import { toast } from 'react-hot-toast';
 
 export default function Profile() {
-    const { data: userInfo } = useLocalStorage();
-    const id = userInfo.userId;
+    const { myId } = useLocalStorage();
+
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isEditMode, setIsEditMode] = useState(false);
-    const url = `https://dummyjson.com/users/${id}`;
+    const url = `https://dummyjson.com/users/${myId}`;
     const { data, isLoading } = useGetData(url);
 
     useEffect(() => {

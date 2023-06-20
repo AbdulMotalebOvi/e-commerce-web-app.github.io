@@ -7,8 +7,8 @@ import { CommonSection } from "../sectionHook/CommonSection";
 import CheckoutForm from "./CheckoutForm";
 
 export default function Checkout() {
-    const { data: useata } = useLocalStorage()
-    const [id, setId] = useState(useata?.userId || null);
+    const { storedData } = useLocalStorage()
+    const [id, setId] = useState(storedData?.userId || null);
     const url = `https://dummyjson.com/carts/user/${id}`
     const { data, isLoading } = useGetData(url)
 

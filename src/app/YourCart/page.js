@@ -11,14 +11,13 @@ import Link from "next/link";
 import { useState } from "react";
 
 export default function YourCart() {
-    const { data: useata } = useLocalStorage()
-    const [id, setId] = useState(useata?.userId || null);
+    const { myId } = useLocalStorage()
 
     const { data: products = [], isLoading, refetch } = useQuery({
         queryKey: ['products'],
         queryFn: async () => {
             try {
-                const res = await fetch(`https://dummyjson.com/carts/user/${id}`, {
+                const res = await fetch(`https://dummyjson.com/carts/user/${myId}`, {
 
                 })
                 const data = res.json()
@@ -51,7 +50,7 @@ export default function YourCart() {
     if (isLoading) {
         return <Loader />
     }
-    const myFetchData = products.carts[0].products
+    const myFetchData = products?.carts[0].products;
     console.log(myFetchData);
 
     // section title
