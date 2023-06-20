@@ -11,7 +11,7 @@ import Link from "next/link";
 
 export default function YourCart() {
     const { data: useata } = useLocalStorage()
-    const id = useata?.userId
+    const [id, setId] = useState(useata?.userId);
 
     const { data: products = [], isLoading, refetch } = useQuery({
         queryKey: ['products'],

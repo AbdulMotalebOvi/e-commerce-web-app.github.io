@@ -16,7 +16,7 @@ import { useRouter } from "next/navigation";
 
 export default function DetailLandingPage({ data, loading }) {
     const { data: useata } = useLocalStorage()
-    const myUser = useata.userId
+    const [userOwnID, setId] = useState(useata?.userId);
     const router = useRouter()
     const [product, setProduct] = useState([]);
     const { addToCart } = useContext(CartContext)
@@ -64,7 +64,7 @@ export default function DetailLandingPage({ data, loading }) {
         };
         setProduct((prevProducts) => [...prevProducts, newCartItem]);
         const cartData = {
-            userId: myUser,
+            userId: userOwnID,
             products: product,
         };
 
