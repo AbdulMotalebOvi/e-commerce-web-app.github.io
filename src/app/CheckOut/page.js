@@ -1,4 +1,5 @@
 'use client'
+import { useState } from "react";
 import useGetData from "../Hooks/useGetData";
 import { useLocalStorage } from "../IDContext/LocalStorageProvider";
 import Loader from "../Loader/Loader";
