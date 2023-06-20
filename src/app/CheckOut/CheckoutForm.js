@@ -1,8 +1,16 @@
 
+import { useState } from 'react'
 import ButtonBlack from '../ButtonBlack/ButtonBlack'
 import AccountDetails from './AccountDetails'
+import Loader from '../Loader/Loader'
 
-export default function CheckoutForm() {
+export default function CheckoutForm({ myFetchData, isLoading }) {
+    const [myData, setMyData] = useState(myFetchData[0] || [])
+    if (isLoading) {
+        return <Loader />
+    }
+
+    console.log(myData);
     return (
         <>
             <div className="">
@@ -119,26 +127,30 @@ export default function CheckoutForm() {
                     <div className="w-screen max-w-2xl border-3 p-10 border border-[#eaedff]  first-letter: space-y-4">
                         <h4 className="text-2xl my-3 font-semibold">Your Order</h4>
                         <dl className="space-y-4 text-[15px] border border-[#eaedff] p-5">
-                            <div className="flex   justify-between ">
-                                <dt>Product</dt>
-                                <dd>Total</dd>
-                            </div>
-                            <hr />
-                            <div className="flex justify-between ">
-                                <dt>Eames House Bird in Black × 1</dt>
-                                <dd>£200</dd>
-                            </div>
-                            <hr />
 
-                            <div className="flex justify-between">
-                                <dt>Cart Subtotal	</dt>
-                                <dd>£200</dd>
-                            </div>
+                            <>
+                                <div className="flex   justify-between ">
+                                    <dt>Product</dt>
+                                    <dd>Total</dd>
+                                </div>
+                                <hr />
+                                <div className="flex justify-between ">
+                                    <dt>Eames House Bird in Black × 1</dt>
+                                    <dd>${myData?.discountedTotal}</dd>
+                                </div>
+                                <hr />
+
+                                <div className="flex justify-between">
+                                    <dt>Total Products	</dt>
+                                    <dd>${myData?.totalProducts}</dd>
+                                </div>
+                            </>
+
                             <hr />
 
                             <div className="flex justify-between">
                                 <dt>Order Total	</dt>
-                                <dd>£200</dd>
+                                <dd>${myData.total}</dd>
                             </div>
                             <hr />
                             <AccountDetails />

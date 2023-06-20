@@ -5,10 +5,10 @@ import { CommonSection } from "../sectionHook/CommonSection";
 import Table from "./Table";
 import { useLocalStorage } from "../IDContext/LocalStorageProvider";
 import { toast } from "react-hot-toast";
-import useGetData from "../Hooks/useGetData";
+
 import Button from "../Button/Button";
 import Link from "next/link";
-import { useState } from "react";
+
 
 export default function YourCart() {
     const { myId } = useLocalStorage()
@@ -51,7 +51,7 @@ export default function YourCart() {
         return <Loader />
     }
     const myFetchData = products?.carts[0].products;
-    console.log(myFetchData);
+
 
     // section title
     const header = 'Your Cart';
