@@ -12,7 +12,7 @@ import { useState } from "react";
 
 export default function YourCart() {
     const { data: useata } = useLocalStorage()
-    const [id, setId] = useState(useata?.userId);
+    const [id, setId] = useState(useata?.userId || null);
 
     const { data: products = [], isLoading, refetch } = useQuery({
         queryKey: ['products'],
