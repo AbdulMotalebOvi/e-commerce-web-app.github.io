@@ -6,8 +6,10 @@ export default function Left() {
     return (
         <div className='myStyle3
         '>
-            <div className='float-right'>
-                <Image src={img1} className='h-[530px]' />
+            <div className="flex justify-center">
+                <div className="w-full md:w-auto">
+                    <Image src={img1} className="h-auto md:h-[530px] mx-auto" />
+                </div>
             </div>
         </div>
     )

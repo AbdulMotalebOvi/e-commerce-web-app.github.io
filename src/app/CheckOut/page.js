@@ -15,7 +15,7 @@ export default function Checkout() {
         return <Loader />
     }
     const myFetchData = data?.carts
-    console.log(myFetchData);
+
 
     const header = 'Checkout';
     const title = 'Checkout';
@@ -26,7 +26,7 @@ export default function Checkout() {
             {sectionMarkup}
             <div className="my-10 max-w-screen-xl mx-auto">
                 <div className="mx-auto grid max-w-screen-2xl grid-cols-1 md:grid-cols-2">
-                    <CheckoutForm myFetchData={myFetchData} />
+                    <CheckoutForm isLoading={isLoading} myFetchData={myFetchData} />
                 </div>
 
             </div>
