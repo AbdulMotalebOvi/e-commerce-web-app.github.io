@@ -4,6 +4,7 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import Pagination from './Pagination';
 import Loader from '../Loader/Loader';
+import { BASE_URL } from '../BaseUrl/config';
 
 export default function ProductsAll() {
     const [products, setProducts] = useState([]);
@@ -13,7 +14,7 @@ export default function ProductsAll() {
 
     const fetchProducts = async (limit, skip) => {
         try {
-            const url = `https://dummyjson.com/products?limit=${limit}&skip=${skip}`;
+            const url = `${BASE_URL}products?limit=${limit}&skip=${skip}`;
             const response = await axios.get(url);
             setProducts(response?.data?.products);
             setLoading(false);
@@ -48,9 +49,9 @@ export default function ProductsAll() {
 
     return (
         <div>
-            <h4>Total Products Found: {products.length}</h4>
+            <h4 className='text-[24px] font-medium ml-7 '>Total Products Found: {products.length}</h4>
             <div className="grid grid-cols-3 gap-4">
-                {products.length > 0 ? (
+                {products?.length > 0 ? (
                     <>
                         {products.map((pd) => (
                             <Link

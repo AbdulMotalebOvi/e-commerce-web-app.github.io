@@ -18,6 +18,7 @@ const SideNav = ({ data, handleFilterChange }) => {
 
     return (
         <div className="h-screen">
+
             <ul>
                 <CategoryButtons
                     visibleCategories={visibleCategories}

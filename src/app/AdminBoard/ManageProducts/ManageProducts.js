@@ -2,9 +2,14 @@
 import { useQuery } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import Loader from '@/app/Loader/Loader';
+import { BASE_URL } from '@/app/BaseUrl/config';
+import { useState } from 'react';
+import ModalData from './ModalData';
 
 
 const ManageProducts = () => {
+    const [open, setOpen] = useState(false);
+    const [selectedProduct, setSelectedProduct] = useState(null);
 
     const { data: products = [], isLoading, refetch } = useQuery({
         queryKey: ['products'],
@@ -28,7 +33,6 @@ const ManageProducts = () => {
     const myProducts = products.products
 
     const handlerToDelete = id => {
-        console.log(id);
         const proceed = window.confirm('Do you want to delete this user?')
         if (proceed) {
             fetch(`https://dummyjson.com/products/${id}`, {
@@ -37,76 +41,93 @@ const ManageProducts = () => {
             })
                 .then(res => res.json())
                 .then(data => {
-                    if (data.deletedOn)
+                    if (data?.deletedOn)
                         toast.success('Items deleted Successfully')
                     refetch()
                 })
         }
+    }
+    const handlerToUpdate = id => {
+
+        fetch(`${BASE_URL}/products/${id}`, {
+            method: 'PUT', /* or PATCH */
+            headers: { 'Content-Type': 'application/json' },
+
+        })
+            .then(res => res.json())
+            .then(data => {
+
+                setSelectedProduct(data)
+            })
+
     }
 
 
 
     return (
         <div>
-            <h1 className='text-2xl font-bold my-3'>Manage Doctors: {myProducts?.length}</h1>
+            <h1 className='text-2xl font-bold my-3'>Manage Products: {myProducts?.length}</h1>
             <div className="overflow-x-auto w-full">
-                <table className="table w-full">
 
-                    <thead>
-                        <tr className='uppercase text-[#383838] font-semibold'>
-                            <th>Numbers</th>
-                            <th>Avatar</th>
-                            <th>Name</th>
-                            <th>Price</th>
-                            <th>Action</th>
+                <table className="min-w-full  divide-y border-2 text-center border-[#eaedff]">
+                    <thead className="border-2  border-[#eaedff]">
+                        <tr className="">
+
+                            <th scope="col" className=" font-bold border-2 border-[#eaedff] text-xs text-black uppercase tracking-wider">
+                                Numbers of
+                            </th>
+                            <th scope="col" className="px-2 py-2 font-bold border-2 border-[#eaedff] text-xs text-black uppercase tracking-wider">
+                                Image
+                            </th>
+                            <th scope="col" className="px-6 py-3 font-bold border-2 border-[#eaedff] text-xs text-black uppercase tracking-wider">
+                                Price
+                            </th>
+
+                            <th scope="col" className="px-6 py-3 font-bold border-2 border-[#eaedff] text-xs text-black uppercase tracking-wider">
+                                Total
+                            </th>
+                            <th scope="col" className="px-6 py-3 font-bold border-2 border-[#eaedff] text-xs text-green-600 uppercase tracking-wider">
+                                Update
+                            </th>
+                            <th scope="col" className="px-6 py-3 font-bold border-2 border-[#eaedff] text-xs text-black uppercase tracking-wider">
+                                Remove
+                            </th>
                         </tr>
                     </thead>
-                    <tbody className='my-3'>
-
+                    <tbody className=" divide-y">
                         {
                             myProducts?.map((dr, index) =>
-                                <tr key={index} className='my-3'>
-                                    <th>
-                                        <label>
-                                            <h1>{index + 1}</h1>
-                                        </label>
-                                    </th>
-                                    <td>
-                                        <div className="flex  space-x-3">
-                                            <div className="avatar">
-                                                <div className="rounded-full w-12 h-12">
-                                                    <img src={dr?.thumbnail} alt="Avatar Tailwind CSS Component" />
-                                                </div>
-                                            </div>
-
-                                        </div>
+                                <tr>
+                                    <td className="border-2 border-[#eaedff]  px-2 py-2 whitespace-nowrap">
+                                        <div className="text-sm text-gray-900">{index + 1}</div>
                                     </td>
-                                    <td>
+                                    <td className="border-2 border-[#eaedff] px-2 py-2 whitespace-nowrap">
                                         <div>
-                                            <div className="font-bold">{dr.title}</div>
-
-                                        </div>
+                                            <img className='w-[60px] h-[60px]' src={dr?.thumbnail} alt="product" /></div>
                                     </td>
-                                    <td>
-                                        {dr.price}
-
+                                    <td className="border-2 border-[#eaedff]  px-6 py-4 whitespace-nowrap">
+                                        <div className="text-sm text-gray-900">${dr.price}</div>
                                     </td>
-                                    <td>
-                                        <button className="bg-black rounded-full px-5 py-2 text-white" onClick={() => handlerToDelete(dr.id)}>
-                                            Delete
-                                        </button>
+                                    <td className="px-6 py-4 whitespace-nowrap border-2 border-[#eaedff] ">
+                                        <div className="text-sm text-gray-900">{dr.stock}</div>
+                                    </td>
+                                    <td className="border-2 border-[#eaedff]  px-6 py-4 whitespace-nowrap">
+                                        <button onClick={() => setOpen(true)} className="text-green-600">Update</button>
+                                    </td>
+                                    <td className="border-2 border-[#eaedff]  px-6 py-4 whitespace-nowrap">
+                                        <button onClick={() => handlerToDelete(dr.id)} className="text-red-600 hover:text-red-700">Delete</button>
                                     </td>
                                 </tr>
                             )
                         }
 
-
                     </tbody>
-
                 </table>
 
             </div>
-
+            <>
+                <ModalData setOpen={setOpen} open={open} setSelectedProduct={setSelectedProduct} />
+            </>
         </div >
     );
 };

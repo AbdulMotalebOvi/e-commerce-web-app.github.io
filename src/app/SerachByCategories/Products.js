@@ -61,6 +61,7 @@ const Products = () => {
             <div className="container mx-auto px-4 ">
                 <div className="flex justify-between ">
                     <div className="w-1/4 ">
+                        <h1 className='text-2xl mb-5 font-semibold'>Search by Categories</h1>
                         <SideNav data={data} handleFilterChange={handleFilterChange}
                         />
                     </div>

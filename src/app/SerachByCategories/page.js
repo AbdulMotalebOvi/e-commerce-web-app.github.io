@@ -6,7 +6,7 @@ import Products from "./Products";
 export default function Categories() {
     const header = 'Shop';
     const title = 'Shop';
-    const linkUp = 'Shop'
+    const linkUp = 'SerachByCategories'
     const sectionMarkup = CommonSection(header, title, linkUp);
     return (
         <section>
