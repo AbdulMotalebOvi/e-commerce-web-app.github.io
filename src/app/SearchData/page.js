@@ -4,14 +4,16 @@ import React, { useEffect } from 'react'
 
 export default function SearchData() {
     const router = useRouter();
-    useEffect(() => {
-        alert(router.query); // Alerts 'Someone'
-    }, [router.query]);
+    const { query, state } = router;
+    console.log(query, state);
+    // Access the query parameter data
+    // const searchData = query.result;
 
+    // // Access the state object data
+    // const { result, myLocation } = state || {};
     return (
-        <div>SearchD
-            ata
-            {/* <p>Data: {JSON.stringify(data)}</p> */}
+        <div> <h1>Search Data Page</h1>
+
         </div>
     )
 }

@@ -9,6 +9,7 @@ import useGetData from "../../Hooks/useGetData";
 import Loader from "../../Loader/Loader";
 import Link from "next/link";
 import SectionTitle from "@/app/SectionTitle/SectionTitle";
+import ButtonBlack from "@/app/ButtonBlack/ButtonBlack";
 
 
 export default function Trending() {
@@ -116,8 +117,11 @@ export default function Trending() {
                     </>
                 ))}
             </Slider>
-
-
+            <div className="text-center">
+                <Link href='/SerachByCategories'>
+                    <ButtonBlack title='Show More' />
+                </Link>
+            </div>
         </section>
     )
 }

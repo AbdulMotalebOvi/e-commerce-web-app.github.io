@@ -5,34 +5,38 @@ import Link from 'next/link';
 import DropdownMenu from './DropdownMenu';
 import Cart from './Cart/Cart';
 import { MagnifyingGlassIcon, UserCircleIcon } from '@heroicons/react/24/solid'
-import useGetData from '../Hooks/useGetData';
+
 import Loader from '../Loader/Loader';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import Profile from '../Profile/page';
+import { BASE_URL } from '../BaseUrl/config';
+
 
 
 export default function Navbar() {
     const [searchValue, setSearchValue] = useState()
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const router = useRouter()
-    const { data, isLoading } = useGetData(`https://dummyjson.com/products/search?q=${searchValue}`);
+
+    const handlerToSearch = async (e) => {
+
+        try {
+            setIsLoading(true);
+            const url = `${BASE_URL}search?q=${searchValue}`;
+            const res = await fetch(url);
+            const result = await res.json();
+            router.push(`/SearchData?data=${searchValue}`, { state: { result, myLocation: searchValue } });
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        } finally {
+            setIsLoading(false);
+        }
+
+    };
     if (isLoading) {
         return <Loader />
     }
-    const handlerToSearch = (e) => {
-        e.preventDefault();
-        router.push(
-            { pathname: "/SearchData", query: searchValue },
-            "/SearchData"
-        );
-
-    };
-
-    if (isLoading) {
-        return <Loader />;
-    }
-
 
     return (
         <div className='bg-[#1E66FF]'>
@@ -48,7 +52,7 @@ export default function Navbar() {
                     </Link>
                     <ul className="flex items-center hidden space-x-8 lg:flex">
                         <div className="relative w-full ">
-                            <form onSubmit={handlerToSearch}>
+                            <div>
                                 <label htmlFor="search" className="sr-only">
                                     Search
                                 </label>
@@ -62,13 +66,13 @@ export default function Navbar() {
                                 />
                                 <span className="absolute inset-y-0 end-0 grid w-10 place-content-center">
                                     <button
-                                        type="submit"
+                                        onClick={() => handlerToSearch()}
                                         className="rounded-full bg-[#4DC3F7]  px-6 py-[6px] mr-6"
                                     >
                                         <MagnifyingGlassIcon className="h-6 w-6 text-white" />
                                     </button>
                                 </span>
-                            </form>
+                            </div>
                         </div>
 
                     </ul>
