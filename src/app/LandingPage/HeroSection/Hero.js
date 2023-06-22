@@ -3,6 +3,7 @@ import CameraSlider from './MiddleSlider/CameraSlider'
 import Right from './RightSide/Right'
 import './hero.css'
 import MenuItems from '../MenuItems/MenuItems'
+import Link from 'next/link'
 
 export default function Hero() {
     return (
@@ -20,7 +21,7 @@ export default function Hero() {
                             <p className='text-[18px]'>Life is hard enough already. Let us make it a little easier, Vision of Snipshop for a better outlook.</p>
                         </div>
                         <div className="btn_last mt-[60px] flex justify-between">
-                            <ButtonBlack title='Shop Now' />
+                            <Link href='/SerachByCategories'>  <ButtonBlack title='Shop Now' /></Link>
                             <div>
                                 <p>Start From</p>
                                 <h3 className='font-semibold text-[24px]'>110.00$</h3>

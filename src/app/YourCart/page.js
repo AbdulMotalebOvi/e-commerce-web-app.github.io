@@ -8,6 +8,7 @@ import { toast } from "react-hot-toast";
 
 import Button from "../Button/Button";
 import Link from "next/link";
+import { BASE_URL } from "../BaseUrl/config";
 
 
 export default function YourCart() {
@@ -30,16 +31,22 @@ export default function YourCart() {
         }
     })
 
+
+    const myFetchData = products?.carts;
+
+    if (isLoading) {
+        return <Loader />
+    }
     const handlerToDeleteUser = id => {
         const proceed = window.confirm('Do you want to delete this user?')
         if (proceed) {
-            fetch(`https://dummyjson.com/carts/${id}`, {
+            fetch(`${BASE_URL}carts/${id}`, {
                 method: 'DELETE',
 
             })
                 .then(res => res.json())
                 .then(data => {
-                    if (data?.deletedOn) {
+                    if (data) {
                         toast.success('Item deleted Successfully')
                         refetch()
                     }
@@ -47,10 +54,6 @@ export default function YourCart() {
         }
     }
 
-    if (isLoading) {
-        return <Loader />
-    }
-    const myFetchData = products?.carts[0].products;
 
 
     // section title
@@ -62,7 +65,12 @@ export default function YourCart() {
         <section>
             {sectionMarkup}
             <div className="my-20 max-w-screen-xl mx-auto">
-                <Table handlerToDeleteUser={handlerToDeleteUser} myFetchData={myFetchData} />
+                {
+                    myFetchData?.length > 0 ?
+                        <Table handlerToDeleteUser={handlerToDeleteUser} isLoading={isLoading} myFetchData={myFetchData} />
+                        :
+                        <h1 className="text-2xl font-semibold my-5">Nothing To Show</h1>
+                }
 
                 <div className="my-10">
 
