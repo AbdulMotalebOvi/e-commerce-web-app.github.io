@@ -26,7 +26,7 @@ export default function Navbar() {
         const res = await fetch(url)
         const result = await res.json()
         if (result) {
-            router.push(`/SearchData?q=${myLocation}`, { pathname: `/SearchData?q=${myLocation}`, query: { myLocation }, state: { result, myLocation }, });
+            router.push('/SerachByCategories');
 
         }
 
