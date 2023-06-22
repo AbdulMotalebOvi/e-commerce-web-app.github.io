@@ -1,11 +1,12 @@
 'use client'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import React, { useEffect } from 'react'
 
 export default function SearchData() {
-    const router = useRouter();
-    const { query, state } = router;
-    console.log(query, state);
+    const router = useRouter()
+
+    console.log(router.query);
+    // console.log(myLocation, result);
     // Access the query parameter data
     // const searchData = query.result;
 

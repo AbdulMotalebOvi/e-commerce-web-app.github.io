@@ -7,21 +7,22 @@ import { useState } from 'react';
 import RatingStars from './RatingStars';
 import { useLocalStorage } from '@/app/IDContext/LocalStorageProvider';
 import { BASE_URL } from '@/app/BaseUrl/config';
-import useGetData from '@/app/Hooks/useGetData';
+
+import { toast } from 'react-hot-toast';
 
 
 const YourReview = ({ setOpen, open, data }) => {
     const { myId } = useLocalStorage()
     const { thumbnail, title, price, id, description } = data;
     const [rating, setRating] = useState(null);
+    const [myPostId, setMypostId] = useState()
     const [inputChange, setInputChange] = useState()
-    console.log(inputChange, rating);
 
     const url = `${BASE_URL}users/${myId}/posts`
-    console.log(url);
-    const { data: myData, isLoading } = useGetData(url)
-    const reviewData = myData.posts
-    console.log(reviewData);
+
+    fetch(`https://dummyjson.com/comments/${id}`)
+        .then(res => res.json())
+        .then(data => setMypostId(data?.postId))
 
     function handleRadioChange(event) {
         setRating(event.target.value);
@@ -30,7 +31,8 @@ const YourReview = ({ setOpen, open, data }) => {
         const addReviews = {
             rating: rating,
             body: inputChange,
-            userId: myId
+            userId: myId,
+            postId: myPostId
         }
         try {
             fetch(`${BASE_URL}comments/add`, {
@@ -39,7 +41,11 @@ const YourReview = ({ setOpen, open, data }) => {
                 body: JSON.stringify(addReviews)
             })
                 .then(res => res.json())
-                .then(data => console.log(data));
+                .then(data => {
+                    if (data.postId) {
+                        toast.success('Your Reviews Added')
+                    }
+                });
         } catch (error) {
             console.error('Error:', error);
         }

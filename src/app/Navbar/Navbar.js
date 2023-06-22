@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import logo from '../assests/logo/Logo.png'
 import Link from 'next/link';
 import DropdownMenu from './DropdownMenu';
@@ -10,30 +10,31 @@ import Loader from '../Loader/Loader';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { BASE_URL } from '../BaseUrl/config';
+import { Router } from 'next/router';
 
 
 
 export default function Navbar() {
-    const [searchValue, setSearchValue] = useState()
+    const locationRef = useRef('')
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const router = useRouter()
 
-    const handlerToSearch = async (e) => {
+    const handlerToSearch = async () => {
+        const myLocation = locationRef.current.value
+        const url = `${BASE_URL}products/search?q=${myLocation}`
 
-        try {
-            setIsLoading(true);
-            const url = `${BASE_URL}search?q=${searchValue}`;
-            const res = await fetch(url);
-            const result = await res.json();
-            router.push(`/SearchData?data=${searchValue}`, { state: { result, myLocation: searchValue } });
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        } finally {
-            setIsLoading(false);
+        const res = await fetch(url)
+        const result = await res.json()
+        if (result) {
+            Router.push(`/SearchData?q=${myLocation}`, { pathname: `/SearchData?q=${myLocation}`, query: { result } });
+
         }
 
-    };
+
+        // router.push(`/SearchData?data=${searchValue}`, { state: { result, myLocation: searchValue } });
+
+    }
     if (isLoading) {
         return <Loader />
     }
@@ -61,8 +62,7 @@ export default function Navbar() {
                                     id="search"
                                     placeholder="Search product"
                                     className="w-full rounded-full border-black border-none pl-3 py-2 pe-10 shadow-sm sm:text-sm"
-                                    value={searchValue}
-                                    onChange={(e) => setSearchValue(e.target.value)}
+                                    ref={locationRef}
                                 />
                                 <span className="absolute inset-y-0 end-0 grid w-10 place-content-center">
                                     <button
