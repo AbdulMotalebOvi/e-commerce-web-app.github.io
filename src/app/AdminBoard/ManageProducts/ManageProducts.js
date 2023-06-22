@@ -4,12 +4,14 @@ import toast from 'react-hot-toast';
 import Loader from '@/app/Loader/Loader';
 import { BASE_URL } from '@/app/BaseUrl/config';
 import { useState } from 'react';
-import ModalData from './ModalData';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+
 
 
 const ManageProducts = () => {
-    const [open, setOpen] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
+    const router = useRouter()
 
     const { data: products = [], isLoading, refetch } = useQuery({
         queryKey: ['products'],
@@ -47,21 +49,7 @@ const ManageProducts = () => {
                 })
         }
     }
-    const handlerToUpdate = id => {
-
-        fetch(`${BASE_URL}/products/${id}`, {
-            method: 'PUT', /* or PATCH */
-            headers: { 'Content-Type': 'application/json' },
-
-        })
-            .then(res => res.json())
-            .then(data => {
-
-                setSelectedProduct(data)
-            })
-
-    }
-
+    // update
 
 
     return (
@@ -112,7 +100,7 @@ const ManageProducts = () => {
                                         <div className="text-sm text-gray-900">{dr.stock}</div>
                                     </td>
                                     <td className="border-2 border-[#eaedff]  px-6 py-4 whitespace-nowrap">
-                                        <button onClick={() => setOpen(true)} className="text-green-600">Update</button>
+                                        <Link href={`/AdminBoard/Updateproducts/${dr.id}`} className="text-green-600">Update</Link>
                                     </td>
                                     <td className="border-2 border-[#eaedff]  px-6 py-4 whitespace-nowrap">
                                         <button onClick={() => handlerToDelete(dr.id)} className="text-red-600 hover:text-red-700">Delete</button>
@@ -123,11 +111,7 @@ const ManageProducts = () => {
 
                     </tbody>
                 </table>
-
             </div>
-            <>
-                <ModalData setOpen={setOpen} open={open} setSelectedProduct={setSelectedProduct} />
-            </>
         </div >
     );
 };
