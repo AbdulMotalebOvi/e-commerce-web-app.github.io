@@ -29,6 +29,7 @@ const MySlider = ({ myData }) => {
     };
 
     const settings = {
+        autoplay: true,
         infinite: false,
         speed: 500,
         slidesToShow: 3,
@@ -64,7 +65,7 @@ const MySlider = ({ myData }) => {
 
     return (
         <div className="grid grid-cols-4 gap-3">
-            <div className="slider-navigation col-span-1 flex items-center justify-center">
+            <div className="slider-navigation  flex items-center justify-center mb-10">
                 <button
                     className={`slider-prev mr-5 w-8 h-8 rounded-full flex items-center justify-center text-white transition-colors ${activeButton === "prev" ? "bg-[#001439] text-white" : "bg-[#F4F4F4] rounded-full text-black"}`}
                     onClick={handlePrev}
@@ -96,10 +97,11 @@ const MySlider = ({ myData }) => {
                                 <p className="text-[#8D8D8D] text-[14px] line-clamp-2">{pd.description}</p>
                                 <h4 className="font-semibold text-[18px] text-[#0E4B80]">{pd.price}.00 USD</h4>
                             </div>
+
+                            <div className="text-center my-4">
+                                <ButtonBlack title='Order Now' />
+                            </div>
                         </Link>
-                        <div className="text-center my-4">
-                            <ButtonBlack title='Order Now' />
-                        </div>
                     </>
                 ))}
             </Slider>

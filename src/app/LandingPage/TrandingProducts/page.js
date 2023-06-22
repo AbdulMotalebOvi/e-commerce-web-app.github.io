@@ -37,7 +37,8 @@ export default function Trending() {
     };
 
     const settings = {
-        rows: 3,
+        autoplay: true,
+        rows: 2,
         infinite: false,
         speed: 500,
         slidesToShow: 3,
@@ -88,17 +89,18 @@ export default function Trending() {
                 </button>
             </div>
 
-            <Slider {...settings} ref={sliderRef} className="">
+            <Slider {...settings} ref={sliderRef} >
+
                 {myData?.map((pd) => (
                     <>
 
-                        <Link href={`/DetailsComponents/${pd.id}`} className="group  h-[500px] relative block overflow-hidden p-4">
+                        <Link href={`/DetailsComponents/${pd.id}`} className="group rounded-[24px] h-[500px] relative block overflow-hidden  p-5">
 
 
                             <img
                                 src={pd.thumbnail}
                                 alt=""
-                                className="h-[40px] w-full object-cover transition duration-500 group-hover:scale-105 sm:h-72"
+                                className="h-[50px] object-cover transition duration-500  group-hover:scale-105 sm:h-72"
                             />
 
                             <div className="relative border border-gray-100 bg-white p-6">
@@ -116,6 +118,7 @@ export default function Trending() {
 
                     </>
                 ))}
+
             </Slider>
             <div className="text-center">
                 <Link href='/SerachByCategories'>

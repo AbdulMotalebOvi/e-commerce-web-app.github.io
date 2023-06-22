@@ -10,7 +10,6 @@ import Loader from '../Loader/Loader';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { BASE_URL } from '../BaseUrl/config';
-import { Router } from 'next/router';
 
 
 
@@ -27,7 +26,7 @@ export default function Navbar() {
         const res = await fetch(url)
         const result = await res.json()
         if (result) {
-            Router.push(`/SearchData?q=${myLocation}`, { pathname: `/SearchData?q=${myLocation}`, query: { result } });
+            router.push(`/SearchData?q=${myLocation}`, { pathname: `/SearchData?q=${myLocation}`, query: { myLocation }, state: { result, myLocation }, });
 
         }
 
