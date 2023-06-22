@@ -7,7 +7,6 @@ import { toast } from 'react-hot-toast';
 
 export default function Profile() {
     const { myId } = useLocalStorage();
-
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -28,10 +27,9 @@ export default function Profile() {
 
         const userData = {
             username: name,
-
             password: password
         };
-        console.log(userData);
+
         fetch(url, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
@@ -39,9 +37,12 @@ export default function Profile() {
         })
             .then((res) => res.json())
             .then((data) => {
-                console.log(data);
-                toast.success('Info Update Successfully');
-                setIsEditMode(false); // Disable edit mode after updating data
+                if (data) {
+                    console.log(data)
+                    setIsEditMode(false);
+                    toast.success('Info Update successfully') // Disable edit mode after updating data
+                }
+
             });
     };
 

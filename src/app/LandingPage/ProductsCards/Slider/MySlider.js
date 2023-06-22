@@ -80,7 +80,7 @@ const MySlider = ({ myData }) => {
                 </button>
             </div>
 
-            <Slider {...settings} ref={sliderRef} className="col-span-3 ">
+            <Slider {...settings} ref={sliderRef} className="col-span-3">
                 {myData?.map((pd) => (
                     <>
                         <Link
